@@ -1,0 +1,22 @@
+---
+// Mariky ny tranokala: ny marika SAMPATI FJKM (sary PNG), aseho manontolo sy tsy ovana.
+import { Image } from 'astro:assets';
+import sampati from '../assets/marika/sampati.png';
+
+interface Props {
+  sizes?: string;
+  aloha?: boolean;
+  alt?: string;
+}
+const { sizes = '132px', aloha = false, alt = 'Marika SAMPATI FJKM' } = Astro.props;
+---
+
+<Image
+  class="marika-sampati"
+  src={sampati}
+  alt={alt}
+  format="png"
+  widths={[96, 160, 264, 493]}
+  sizes={sizes}
+  loading={aloha ? 'eager' : 'lazy'}
+/>

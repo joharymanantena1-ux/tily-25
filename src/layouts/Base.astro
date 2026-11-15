@@ -1,0 +1,143 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/caveat/600.css';
+import '../styles/global.css';
+import MarikaSampati from '../components/MarikaSampati.astro';
+import { site, rubrika } from '../data/site';
+
+interface Props {
+  href: string; // lalan'ny pejy ankehitriny, ohatra '/tantara/'
+  lohateny?: string;
+  famaritana?: string;
+  tsyMisyTohiny?: boolean; // true = efa manana ny hetsika lehibeny ilay pejy
+}
+
+const { href, lohateny, famaritana = site.famaritana, tsyMisyTohiny = false } = Astro.props;
+const laharana = rubrika.findIndex((r) => r.href === href);
+const teoAloha = laharana > 0 ? rubrika[laharana - 1] : null;
+const manaraka = laharana >= 0 && laharana < rubrika.length - 1 ? rubrika[laharana + 1] : null;
+const lohatenyFeno = lohateny ? `${lohateny} · ${site.anaranaFohy}` : site.anarana;
+---
+
+<!doctype html>
+<html lang="mg">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{lohatenyFeno}</title>
+    <meta name="description" content={famaritana} />
+    <meta name="theme-color" content="#062a66" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        if (!sessionStorage.getItem('fono-nisokatra') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('misy-fono');
+        }
+      } catch (e) {}
+    </script>
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="mitsambikina" href="#votoaty">Hitsambikina any amin’ny votoaty</a>
+
+    <div class="rakitsary">
+      <!-- Lamosina: menio amin'ny solosaina -->
+      <aside class="lamosina" transition:name="lamosina" transition:animate="none">
+        <a class="anarana-site" href="/">
+          <MarikaSampati sizes="132px" aloha />
+          <strong>Fivondronana faha-25</strong>
+          <small>Alasora</small>
+        </a>
+        <nav aria-label="Menio">
+          <ul class="menio-lisitra">
+            {
+              rubrika.map((r) => (
+                <li>
+                  <a href={r.href} aria-current={r.href === href ? 'page' : undefined}>
+                    {r.fohy}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </aside>
+
+      <div class="pejy">
+        <!-- Loha amin'ny finday -->
+        <header class="loha-finday">
+          <a class="anarana-site" href="/">
+            <MarikaSampati sizes="44px" aloha alt="" />
+            <strong>{site.anaranaFohy}</strong>
+          </a>
+          <button class="bokotra-menio" type="button" data-sokafy-menio aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16"></path>
+            </svg>
+            Menio
+          </button>
+        </header>
+
+        <main id="votoaty" transition:name="pejy">
+          <slot />
+
+          {
+            !tsyMisyTohiny && (manaraka || teoAloha) && (
+              <nav class="atiny tohiny" aria-label="Pejy manaraka">
+                {manaraka && (
+                  <a class="bokotra" href={manaraka.href} rel="next">
+                    Manaraka: {manaraka.fohy} →
+                  </a>
+                )}
+                {teoAloha && (
+                  <a class="teo-aloha" href={teoAloha.href} rel="prev">
+                    ← {teoAloha.fohy}
+                  </a>
+                )}
+              </nav>
+            )
+          }
+        </main>
+
+        <footer class="tongotra">
+          <p class="atiny">
+            {site.anarana} · {site.fiangonana} · Dika andrana ·
+            <a href="/loharano/">Loharano sy sary</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Menio amin'ny finday -->
+    <dialog class="menio-finday" id="menio-finday" aria-label="Menio">
+      <div class="menio-finday-loha">
+        <span>Menio</span>
+        <button class="bokotra-menio" type="button" data-hidio-menio>Hidio ✕</button>
+      </div>
+      <nav aria-label="Menio">
+        <ul class="menio-lisitra">
+          {
+            rubrika.map((r) => (
+              <li>
+                <a href={r.href} aria-current={r.href === href ? 'page' : undefined}>
+                  {r.fohy}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </dialog>
+
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

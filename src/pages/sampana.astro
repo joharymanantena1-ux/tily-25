@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import Bebe from '../components/Bebe.astro';
+import Loharano from '../components/Loharano.astro';
+import { loko, tily, mpanazava } from '../data/sampana';
+
+const href = '/sampana/';
+// Andalana iray isaky ny loko: ny Tily sy ny Mpanazava mifanila.
+const andalana = tily.map((t, i) => ({ loko: loko[t.loko], tily: t, mpanazava: mpanazava[i] }));
+const loharanoRehetra = [...new Set([...tily, ...mpanazava].flatMap((s) => s.loharano))];
+---
+
+<Base href={href} lohateny="Sampana sy sokajy">
+  <LohaPejy href={href} lede="Ny Tily ho an’ny zazalahy, ny Mpanazava ho an’ny zazavavy." />
+
+  <section class="fizarana atiny" aria-label="Ireo sampana">
+    <div class="tabilao" role="table" aria-label="Sampana sy sokajy">
+      <div class="loha" role="row">
+        <span role="columnheader">Sampana</span>
+        <span role="columnheader">Tily</span>
+        <span role="columnheader">Mpanazava</span>
+      </div>
+      {
+        andalana.map((a) => (
+          <div class="andalana" role="row" style={`--loko:${a.loko.hex}`} data-miseho>
+            <p class="loko" role="cell">{a.loko.anarana}</p>
+            <p role="cell">
+              <span class="iza">Tily</span>
+              <strong>{a.tily.sokajy}</strong>
+              <span class="taona">{a.tily.taona}</span>
+            </p>
+            <p role="cell">
+              <span class="iza">Mpanazava</span>
+              <strong>
+                {a.mpanazava.sokajy ?? '—'}
+                {a.mpanazava.sokajy && <Sata />}
+              </strong>
+              <span class="taona">{a.mpanazava.sokajy ? 'Taona: andrasana' : 'Andrasana'}</span>
+            </p>
+          </div>
+        ))
+      }
+    </div>
+    <Kintana />
+
+    <Bebe soratra="Ny antsipirian’ny sampana tsirairay">
+      {
+        andalana.map((a) => (
+          <div>
+            <h3>{a.loko.anarana}</h3>
+            <p>
+              <strong>Tily — {a.tily.sokajy}.</strong> {a.tily.famaritana} {a.tily.rafitra?.join(' ')}
+            </p>
+            <p>
+              <strong>Mpanazava.</strong> {a.mpanazava.hamarinina}
+            </p>
+          </div>
+        ))
+      }
+      <Loharano fanalahidy={loharanoRehetra} />
+    </Bebe>
+  </section>
+</Base>
+
+<style>
+  .tabilao {
+    margin-bottom: 1.2rem;
+    border-top: 1px solid var(--tsipika);
+  }
+
+  .loha,
+  .andalana {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.4rem 2rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  .loha {
+    padding-block: 0.6rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ranomainty-2);
+  }
+
+  .andalana {
+    padding-block: 1.1rem;
+    align-items: start;
+  }
+
+  /* ny lokon'ny sampana: tsipika matevina eo ankavia, eto ihany no ampiasana azy */
+  .loko {
+    padding-left: 0.9rem;
+    border-left: 8px solid var(--loko);
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .andalana strong {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .taona {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--ranomainty-2);
+    line-height: 1.4;
+  }
+
+  .iza {
+    display: none;
+  }
+
+  /* finday: andalana mitsangana, ny anaran'ny tsanganana averina eo anilan'ny sanda */
+  @media (max-width: 639px) {
+    .loha {
+      display: none;
+    }
+
+    .andalana {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .loko {
+      grid-column: 1 / -1;
+    }
+
+    .iza {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ranomainty-2);
+    }
+  }
+</style>

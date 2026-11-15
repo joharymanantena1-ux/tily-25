@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sary from '../components/Sary.astro';
+import { karazany, fandaharana } from '../data/hetsika';
+
+const href = '/asa-sy-hetsika/';
+---
+
+<Base href={href} lohateny="Asa sy hetsika">
+  <LohaPejy href={href} lede="Eny an-kalamanjana, miaraka amin’ny namana, ary ho an’ny hafa." />
+
+  <section class="fizarana atiny roa">
+    <div class="sary-hetsika" data-miseho>
+      <Sary anarana="afonDasy" aloha sizes="(min-width: 900px) 42vw, 100vw" />
+    </div>
+
+    <dl class="karazany" data-miseho>
+      {
+        karazany.map((k) => (
+          <div>
+            <dt>{k.anarana}</dt>
+            <dd>{k.fanazavana}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="fizarana atiny" aria-labelledby="fandaharana" data-miseho>
+    <h2 id="fandaharana">Fandaharam-potoana</h2>
+    {
+      fandaharana.length > 0 ? (
+        <ul class="fandaharana">
+          {fandaharana.map((f) => (
+            <li>
+              <time datetime={f.daty}>
+                {new Date(f.daty).toLocaleDateString('mg-MG', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </time>
+              <strong>{f.anarana}</strong>
+              <span>
+                {f.toerana} · {f.sampana}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="andrasana">Homen’ny Fivondronana ny daty ivoriana, ny lasy ary ny hetsika efa natao.</p>
+      )
+    }
+  </section>
+</Base>
+
+<style>
+  .roa {
+    display: grid;
+    gap: 2rem clamp(2rem, 6vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .roa {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .sary-hetsika {
+      margin-inline: calc(var(--sisiny) * -1);
+    }
+
+    .sary-hetsika :global(figcaption) {
+      padding-inline: var(--sisiny);
+    }
+  }
+
+  .karazany {
+    margin: 0;
+    border-top: 1px solid var(--tsipika);
+  }
+
+  .karazany div {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  .karazany dt {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .karazany dd {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ranomainty-2);
+    line-height: 1.45;
+  }
+
+  .fandaharana {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--tsipika);
+  }
+
+  .fandaharana li {
+    display: grid;
+    gap: 0.1rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  .fandaharana time {
+    font-weight: 800;
+    color: var(--manga);
+  }
+
+  .fandaharana span {
+    font-size: 0.86rem;
+    color: var(--ranomainty-2);
+  }
+</style>

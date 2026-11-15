@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import { fifandraisana } from '../data/site';
+
+const href = '/fifandraisana/';
+---
+
+<Base href={href} lohateny="Fifandraisana">
+  <LohaPejy href={href} lede="Te hiditra ho Tily na Mpanazava? Tranainy mitady namana taloha?" />
+
+  <section class="fizarana atiny roa">
+    <form class="taratasy" data-taratasy data-mailaka={fifandraisana.mailaka}>
+      <label>
+        <span>Anarana</span>
+        <input type="text" name="anarana" autocomplete="name" required />
+      </label>
+      <label>
+        <span>Hafatra</span>
+        <textarea name="hafatra" rows="5" required></textarea>
+      </label>
+      <button class="bokotra" type="submit">Handefa ny hafatra</button>
+      <p class="soratra-kely">Hisokatra ny fandefasana mailaka ao amin’ny fitaovanao.</p>
+      <p class="valiny" data-valiny tabindex="-1" hidden>
+        Misaotra! Raha tsy nisy nisokatra dia manorata mivantana amin’ny
+        <a href={`mailto:${fifandraisana.mailaka}`}>{fifandraisana.mailaka}</a>.
+      </p>
+    </form>
+
+    <div class="adiresy" data-miseho>
+      <h2>Aiza izahay?<Sata /></h2>
+      <address>
+        {fifandraisana.adiresy.map((a) => <span>{a}</span>)}
+      </address>
+      <p><a href={`mailto:${fifandraisana.mailaka}`}>{fifandraisana.mailaka}</a></p>
+      <p>Facebook: {fifandraisana.facebook}</p>
+      <Kintana />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .roa {
+    display: grid;
+    gap: 2.4rem clamp(2rem, 6vw, 4.5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 860px) {
+    .roa {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    }
+  }
+
+  .taratasy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .taratasy label span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .taratasy input,
+  .taratasy textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.65rem 0.8rem;
+    font: inherit;
+    color: var(--ranomainty);
+    background: var(--fotsy);
+    border: 1px solid #b9aa82;
+    border-radius: 4px;
+  }
+
+  .taratasy textarea {
+    resize: vertical;
+  }
+
+  .taratasy input:focus-visible,
+  .taratasy textarea:focus-visible {
+    outline-offset: 0;
+    border-color: var(--manga);
+  }
+
+  .taratasy .bokotra {
+    justify-self: start;
+  }
+
+  .valiny {
+    font-size: 0.92rem;
+    color: #0b5c1c;
+  }
+
+  .valiny[hidden] {
+    display: none;
+  }
+
+  .adiresy > * + * {
+    margin-top: 0.6rem;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  address span {
+    display: block;
+  }
+
+  .adiresy a {
+    overflow-wrap: anywhere;
+  }
+</style>

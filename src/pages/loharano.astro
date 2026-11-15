@@ -1,0 +1,137 @@
+---
+import Base from '../layouts/Base.astro';
+import { loharano } from '../data/loharano';
+import { sary } from '../data/sary';
+
+const ofisialy = Object.values(loharano).filter((l) => l.karazany === 'ofisialy');
+const fanampiny = Object.values(loharano).filter((l) => l.karazany === 'fanampiny');
+---
+
+<Base href="/loharano/" lohateny="Loharano sy fiavian’ny sary">
+  <header class="loha-pejy atiny">
+    <p class="anarana-pejy">Loharano</p>
+    <h1>Loharano sy sary</h1>
+    <p class="lede">Ny loharano nakana ny votoaty, sy ny tompon’ny sary tsirairay.</p>
+  </header>
+
+  <section class="atiny fizarana" style="padding-top:0">
+    <h2>Loharano ofisialy</h2>
+    <ul class="lisitra">
+      {
+        ofisialy.map((l) => (
+          <li>
+            <a href={l.url} rel="noopener">{l.anarana}</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 style="margin-top:2rem">Loharano fanampiny <small>(hohamarinin’ny Fivondronana)</small></h2>
+    <ul class="lisitra">
+      {
+        fanampiny.map((l) => (
+          <li>
+            <a href={l.url} rel="noopener">{l.anarana}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="atiny fizarana">
+    <h2>Sary</h2>
+    <p style="margin-top:.6rem">
+      Sary malalaka avy amin’ny Wikimedia Commons, tsy misy olona azo fantarina. Tsy misy sarin-jaza tsy ampy taona ato
+      amin’ny tranokala.
+    </p>
+    <div class="tabilao-mikodia">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Sary</th>
+            <th scope="col">Mpaka sary</th>
+            <th scope="col">Lisansa</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            Object.values(sary).map((s) => (
+              <tr>
+                <td>
+                  <a href={s.loharano} rel="noopener">{s.lohateny}</a>
+                </td>
+                <td>{s.mpaka}</td>
+                <td>
+                  <a href={s.lisansaUrl} rel="license noopener">{s.lisansa}</a>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="atiny fizarana">
+    <h2>Marika</h2>
+    <ul class="lisitra">
+      <li>
+        <strong>Marika SAMPATI FJKM</strong> (mariky ny tranokala): rakitra PNG nomen’ny tompon’ny tranokala, aseho
+        manontolo sy tsy novana.
+      </li>
+      <li>
+        <strong>Filaharan’ny marika efatra</strong> (AMGE, Mpanazava, Tily, OMMS): sary ofisialy nalaina tao amin’ny
+        <a href={loharano.fiziantsika.url} rel="noopener">fiziantsika.scout.mg</a> (Tily eto Madagasikara, edisiona
+        2025), tsy novana. Fananan’ny tompony avy ny marika tsirairay.
+      </li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  h2 small {
+    font-size: 0.6em;
+    font-weight: 500;
+    color: var(--ranomainty-2);
+  }
+
+  .lisitra {
+    margin: 0.8rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .lisitra li + li {
+    margin-top: 0.5rem;
+  }
+
+  .tabilao-mikodia {
+    overflow-x: auto;
+    margin-top: 1rem;
+    border-top: 1px solid var(--tsipika);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.65rem 0.9rem 0.65rem 0;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ranomainty-2);
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import Bebe from '../components/Bebe.astro';
+import Loharano from '../components/Loharano.astro';
+import { mpiandraikitra, mpanorina, tranainy } from '../data/olona';
+
+const href = '/mpiandraikitra-sy-namana/';
+const misyAnarana = mpiandraikitra.some((v) => v.lisitra.some((o) => o.anarana));
+const mpanorinaRoa = mpanorina.filter((m) => m.anjara === 'Mpanorina').map((m) => m.anarana);
+---
+
+<Base href={href} lohateny="Mpiandraikitra sy namana">
+  <LohaPejy href={href} />
+
+  <!-- MPANORINA SY TRANAINY -->
+  <section class="fizarana atiny roa">
+    <div data-miseho>
+      <h2>Mpanorina</h2>
+      <p class="anarana-lehibe">{mpanorinaRoa.join(' sy ')}<Sata /></p>
+      <Bebe>
+        <ul>
+          {
+            mpanorina.map((m) => (
+              <li>
+                <strong>{m.anarana}</strong> — {m.anjara}
+              </li>
+            ))
+          }
+        </ul>
+        <p>Anarana sy fanoratra araka ny Scoutopedia (2021).</p>
+        <Loharano fanalahidy={['scoutopedia']} />
+      </Bebe>
+    </div>
+
+    <div data-miseho>
+      <h2>Tranainy sy sakaiza</h2>
+      <p class="anarana-lehibe">{tranainy.fanafohezana}<Sata /></p>
+      <p>{tranainy.anaranaOfisialy}</p>
+      <Bebe>
+        <p>{tranainy.anjara} {tranainy.fehitenda}</p>
+        <p>
+          <strong>Anarana roa no hita:</strong> « {tranainy.anaranaOfisialy} » (torolalana ofisialin’ny Tily, 2025) sy
+          « {tranainy.anaranaHafa} » (Scoutopedia, 2021). Ny voalohany no nampiasaina; ny FMT2S eto Alasora no hanamarina.
+        </p>
+        <p>Ny mpiandraikitry ny FMT2S sy ny sakaiza mpanohana dia homen’ny Fivondronana.</p>
+        <Loharano fanalahidy={['fiziantsika', 'scoutopedia']} />
+      </Bebe>
+    </div>
+  </section>
+
+  <div class="atiny"><Kintana /></div>
+
+  <!-- MPIANDRAIKITRA -->
+  <section class="fizarana atiny" aria-labelledby="mpiandraikitra" data-miseho>
+    <h2 id="mpiandraikitra">Mpiandraikitra ankehitriny</h2>
+    {!misyAnarana && <p class="andrasana">Homen’ny Fivondronana ny anarana. Ireto ny andraikitra hofenoina.</p>}
+    <div class="vondrona-lisitra">
+      {
+        mpiandraikitra.map((v) => (
+          <div>
+            <h3>{v.vondrona}</h3>
+            <ul>
+              {v.lisitra.map((o) => (
+                <li>
+                  {o.andraikitra}
+                  {o.anarana && <strong>{o.anarana}</strong>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .roa {
+    display: grid;
+    gap: 2rem clamp(2rem, 6vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 760px) {
+    .roa {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .anarana-lehibe {
+    margin-top: 0.6rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .vondrona-lisitra {
+    display: grid;
+    gap: 1.6rem clamp(2rem, 5vw, 3rem);
+    margin-top: 1.4rem;
+    align-items: start;
+  }
+
+  @media (min-width: 760px) {
+    .vondrona-lisitra {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .vondrona-lisitra h3 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--manga);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  .vondrona-lisitra ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vondrona-lisitra li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--tsipika);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .vondrona-lisitra strong {
+    display: block;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+// Sary tena izy, aseho manontolo (tsy tapahina), miaraka amin'ny lohateny sy ny tompony.
+import { Image } from 'astro:assets';
+import { sary, type SaryKey } from '../data/sary';
+
+interface Props {
+  anarana: SaryKey;
+  aloha?: boolean; // sary voalohany hita: tsy andrasana (eager)
+  sizes?: string;
+}
+const { anarana, aloha = false, sizes = '(min-width: 1024px) 560px, 100vw' } = Astro.props;
+const s = sary[anarana];
+---
+
+<figure class="sary">
+  <Image
+    src={s.src}
+    alt={s.alt}
+    widths={[480, 800, 1200, 1600]}
+    sizes={sizes}
+    loading={aloha ? 'eager' : 'lazy'}
+    fetchpriority={aloha ? 'high' : undefined}
+  />
+  <figcaption>
+    {s.lohateny} · Sary: {s.mpaka},
+    <a href={s.lisansaUrl} rel="license noopener">{s.lisansa}</a>,
+    <a href={s.loharano} rel="noopener">Wikimedia Commons</a>
+  </figcaption>
+</figure>

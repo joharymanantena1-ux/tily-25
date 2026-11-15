@@ -1,0 +1,12 @@
+---
+// « Bebe kokoa »: manafina ny antsipiriany, tsy mila JavaScript.
+interface Props {
+  soratra?: string;
+}
+const { soratra = 'Bebe kokoa' } = Astro.props;
+---
+
+<details class="bebe">
+  <summary><span class="mihidy">{soratra} +</span><span class="misokatra">Hanafina −</span></summary>
+  <div class="bebe-atiny"><slot /></div>
+</details>

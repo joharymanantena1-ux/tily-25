@@ -1,0 +1,233 @@
+---
+import Base from '../layouts/Base.astro';
+import Sary from '../components/Sary.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import Bebe from '../components/Bebe.astro';
+import MarikaSampati from '../components/MarikaSampati.astro';
+import { rubrika, site } from '../data/site';
+import { vondronaFivondronana } from '../data/sampana';
+
+const pejy = rubrika.slice(2); // ny Tantara dia efa eo amin'ny bokotra lehibe
+---
+
+<Base href="/" tsyMisyTohiny>
+  <!-- Fonon-drakitsary: misokatra indray mandeha isaky ny fitsidihana -->
+  <div class="fono" data-fono aria-hidden="true">
+    <div>
+      <MarikaSampati sizes="(min-width: 600px) 220px, 46vw" aloha alt="" />
+      <p class="fono-anarana">Fivondronana faha-25 Alasora</p>
+    </div>
+  </div>
+
+  <section class="fandraisana atiny">
+    <div class="soratra">
+      <p class="anarana-pejy">SAMPATI · {site.fiangonana}</p>
+      <h1>Fivondronana faha-25 <span>Alasora</span></h1>
+      <p class="lede">Mpanazava sy Tily: manabe ny ankizy sy ny tanora ao Alasora, araka ny fomba skoto.</p>
+      <p class="hetsika">
+        <a class="bokotra" href="/tantara/">Hamaky ny tantara</a>
+      </p>
+    </div>
+    <div class="sary-lehibe">
+      <Sary anarana="alasora" aloha sizes="(min-width: 900px) 46vw, 100vw" />
+    </div>
+  </section>
+
+  <section class="fizarana atiny iza" data-miseho>
+    <p class="teny">« {site.teny} » <small>{site.andininy}</small></p>
+    <div>
+      <h2>Iza moa izahay?</h2>
+      <p class="fehezanteny">
+        Ny <strong>SAMPATI</strong> dia ny Sampana Mpanazava sy Tily ao amin’ny FJKM: ny <strong>Tily</strong> ho an’ny
+        zazalahy, ny <strong>Mpanazava</strong> ho an’ny zazavavy.
+      </p>
+      <Bebe>
+        <ul>
+          <li>Niorina tamin’ny <strong>1953</strong> ny Fivondronana.<Sata /></li>
+          <li>Mpanazava sy Tily <strong>{vondronaFivondronana.isa}</strong> (tarehimarika 2021).<Sata /></li>
+          <li>Lokon’ny Fivondronana: <strong>manga sy vony</strong>.<Sata /></li>
+        </ul>
+        <Kintana />
+      </Bebe>
+    </div>
+  </section>
+
+  <nav class="fizarana atiny" aria-label="Ny pejy hafa" data-miseho>
+    <ul class="rohy-lisitra">
+      {
+        pejy.map((r) => (
+          <li>
+            <a href={r.href}>
+              {r.lohateny} <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</Base>
+
+<style>
+  /* ——— Fono ——— */
+  .fono {
+    display: none;
+  }
+
+  :global(.misy-fono) .fono {
+    display: grid;
+    place-items: center;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    background: var(--manga-antitra);
+    transform-origin: left center;
+    animation: sokafy 1.2s cubic-bezier(0.6, 0.02, 0.3, 1) 0.6s both;
+  }
+
+  @media (min-width: 1024px) {
+    :global(.misy-fono) .fono {
+      left: var(--lamosina);
+    }
+  }
+
+  @keyframes sokafy {
+    0% {
+      transform: perspective(1800px) rotateY(0deg);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: perspective(1800px) rotateY(-96deg);
+      opacity: 0;
+    }
+  }
+
+  .fono :global(.marika-sampati) {
+    width: min(220px, 46vw);
+    margin-inline: auto;
+  }
+
+  .fono-anarana {
+    margin-top: 1.2rem;
+    font-size: clamp(1.1rem, 3.6vw, 1.4rem);
+    font-weight: 600;
+  }
+
+  /* ——— Fandraisana ——— */
+  .fandraisana {
+    display: grid;
+    gap: clamp(1.8rem, 5vw, 3.5rem);
+    padding-block: clamp(2rem, 6vw, 4.5rem) 0;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .fandraisana {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    }
+  }
+
+  .fandraisana h1 {
+    font-size: clamp(2.2rem, 6.4vw, 3.6rem);
+  }
+
+  .fandraisana h1 span {
+    display: block;
+    font-family: var(--sora-tanana);
+    font-weight: 600;
+    font-size: 1.3em;
+    line-height: 0.9;
+    letter-spacing: 0;
+    color: var(--manga);
+  }
+
+  .fandraisana .lede {
+    margin-top: 1.1rem;
+  }
+
+  .hetsika {
+    margin-top: 1.6rem;
+  }
+
+  /* amin'ny finday: mameno ny sakan'ny efijery ny sary */
+  @media (max-width: 899px) {
+    .sary-lehibe {
+      margin-inline: calc(var(--sisiny) * -1);
+    }
+
+    .sary-lehibe :global(figcaption) {
+      padding-inline: var(--sisiny);
+    }
+  }
+
+  /* ——— Iza moa izahay ——— */
+  .iza {
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  @media (min-width: 900px) {
+    .iza {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: clamp(1.8rem, 5vw, 3.5rem);
+      align-items: start;
+    }
+  }
+
+  .teny {
+    font-family: var(--sora-tanana);
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    line-height: 1.05;
+    color: var(--manga);
+  }
+
+  .teny small {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--soratra);
+    font-size: 0.8rem;
+    color: var(--ranomainty-2);
+  }
+
+  .iza h2 + p {
+    margin-top: 0.7rem;
+  }
+
+  /* ——— Rohy mankany amin'ny pejy hafa ——— */
+  .rohy-lisitra {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--tsipika);
+    display: grid;
+    column-gap: clamp(1.8rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 640px) {
+    .rohy-lisitra {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .rohy-lisitra a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: 52px;
+    border-bottom: 1px solid var(--tsipika);
+    color: var(--ranomainty);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .rohy-lisitra a:hover {
+    color: var(--manga);
+  }
+</style>

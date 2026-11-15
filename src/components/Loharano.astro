@@ -1,0 +1,25 @@
+---
+// Lisitra kely misy ny loharano nakana ny votoaty.
+import { loharano, type LoharanoKey } from '../data/loharano';
+
+interface Props {
+  fanalahidy: LoharanoKey[];
+}
+const { fanalahidy } = Astro.props;
+---
+
+{
+  fanalahidy.length > 0 && (
+    <p class="loharano-kely">
+      Loharano:{' '}
+      {fanalahidy.map((k, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={loharano[k].url} rel="noopener">
+            {loharano[k].anarana}
+          </a>
+        </>
+      ))}
+    </p>
+  )
+}

@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Bebe from '../components/Bebe.astro';
+import Loharano from '../components/Loharano.astro';
+import { tily, mpanazava } from '../data/lalana';
+
+const href = '/lalana-sy-fanekena/';
+const misyMpanazava = Boolean(mpanazava.fanekena && mpanazava.lalana);
+---
+
+<Base href={href} lohateny="Lalàna sy fanekena">
+  <LohaPejy href={href} lede="Ny Fanekena sy ny Lalàna folo, araka ny lahatsoratra ofisialy." />
+
+  <!-- TILY -->
+  <section class="fizarana atiny" aria-labelledby="tily">
+    <p class="iza" id="tily">Tily</p>
+    <div class="roa">
+      <div data-miseho>
+        <h2>Fanekena</h2>
+        <p class="fampidirana">{tily.fanekena.fampidirana}</p>
+        <ul class="andininy">
+          {tily.fanekena.andininy.map((a) => <li>{a}</li>)}
+        </ul>
+      </div>
+
+      <div data-miseho>
+        <h2>Lalàna folo</h2>
+        <ol class="lalana">
+          {tily.lalana.map((l) => <li>{l}</li>)}
+        </ol>
+      </div>
+    </div>
+
+    <Bebe>
+      <p><strong>Tadidio:</strong> {tily.fanekena.tadidio.join(' ')}</p>
+      <p><strong>Lalàna roa an’ny Lovitao (Sampana Mavo):</strong> {tily.lovitao.join(' · ')}</p>
+      <p><strong>Nahoana no « lalàna folo » fa tsy « didy folo »?</strong> « {tily.fanamarihana} »</p>
+      <Loharano fanalahidy={['tilyFanekena', 'tilyLalana', 'tilyMavo', 'tilyFanekenaLalana']} />
+    </Bebe>
+  </section>
+
+  <!-- MPANAZAVA -->
+  <section class="fizarana atiny" aria-labelledby="mpanazava">
+    <p class="iza" id="mpanazava">Mpanazava</p>
+    {
+      misyMpanazava ? (
+        <div class="roa">
+          <div>
+            <h2>Fanekena</h2>
+            <p class="fampidirana">{mpanazava.fanekena}</p>
+          </div>
+          <div>
+            <h2>Lalàna</h2>
+            <ol class="lalana">
+              {mpanazava.lalana!.map((l) => (
+                <li>{l}</li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      ) : (
+        <p class="andrasana" data-miseho>
+          Andrasana ny lahatsoratra ofisialin’ny Fanekena sy ny Lalàna Mpanazava. Tsy nosoloina ny an’ny Tily, mba tsy
+          hisy fifangaroana.
+        </p>
+      )
+    }
+  </section>
+</Base>
+
+<style>
+  .iza {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--manga);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  .roa {
+    display: grid;
+    gap: 2.2rem clamp(2rem, 6vw, 4.5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 860px) {
+    .roa {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    }
+  }
+
+  .fampidirana {
+    margin-top: 0.8rem;
+    color: var(--ranomainty-2);
+  }
+
+  .andininy {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+
+  .andininy li {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .andininy li + li {
+    margin-top: 0.5rem;
+  }
+
+  .lalana {
+    list-style: none;
+    counter-reset: lalana;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+
+  .lalana li {
+    counter-increment: lalana;
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    align-items: baseline;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--tsipika);
+    line-height: 1.45;
+  }
+
+  .lalana li::before {
+    content: counter(lalana);
+    font-weight: 800;
+    color: var(--manga);
+  }
+</style>

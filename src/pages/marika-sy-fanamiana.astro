@@ -1,0 +1,267 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import Bebe from '../components/Bebe.astro';
+import Loharano from '../components/Loharano.astro';
+import MarikaSampati from '../components/MarikaSampati.astro';
+import mtem from '../assets/marika/mtem.png';
+import { site } from '../data/site';
+
+const href = '/marika-sy-fanamiana/';
+
+// Ireo marika efatra ao amin'ny filaharana ofisialy, avy any ankavia miankavanana.
+const efatra = [
+  { anarana: 'AMGE', hevitra: 'fikambanana maneran-tany an’ny skoto zazavavy' },
+  { anarana: 'Mpanazava eto Madagasikara', hevitra: 'skoto zazavavy' },
+  { anarana: 'Tily eto Madagasikara', hevitra: 'skoto zazalahy — ny marika Ravinala' },
+  { anarana: 'OMMS', hevitra: 'fikambanana maneran-tany an’ny skoto' },
+];
+
+// Hevitry ny marika Ravinala — araka ny scout.mg sy ny « Fiziantsika » (2025).
+const hevitra = [
+  { singa: 'Boribory', hevitra: 'endrika ampinga.' },
+  { singa: 'Hazo fijaliana', hevitra: 'ny maha-kristianina; ny fleur de lys eo aminy no mampatsiahy fa skoto ny Tily.' },
+  { singa: 'Ravinala', hevitra: 'i Madagasikara; ravina folo, ho an’ny lalàna folon’ny Tily.' },
+  { singa: 'Loko dimy', hevitra: 'manga satria Nosy i Madagasikara; Mavo, Maitso, Mena ary Menafify ho an’ny Sampana efatra.' },
+];
+
+const fady = [
+  'tsy tapahana na anesorana',
+  'tsy atao mitongilana na mihodina',
+  'tsy abontsina na afisaka',
+  'tsy soloina ny loko na ny endri-tsoratra ao anatiny',
+];
+
+// Fanamiana Tily — lahatsoratra nadika ara-bakiteny avy amin'ny « Fiziantsika » (2025).
+// Tsy misy sary eto mandra-pahazoana sary tena izy avy amin'ny Fivondronana.
+const fanamianaTily = [
+  {
+    anarana: 'Sampana Mavo (Lovitao)',
+    soratra:
+      'Lobaka manga tanora, tsy misy col, misy paosy roa eo amin’ny tratra, eo no mipetraka ny fleur de lys sy ny ravinala, misy épaulette. Miaraka amin’ny short manga antitra, miaraka amin’ny fehikibo.',
+  },
+  {
+    anarana: 'Sampana Maitso',
+    soratra:
+      'Lobaka fohy tanana sy short miloko kaki, tsy misy col, misy paosy roa eo amin’ny tratra, eo no mipetraka ny fleur de lys sy ny ravinala, misy épaulette. Misy fehikibo.',
+  },
+  {
+    anarana: 'Sampana Mena sy Menafify',
+    soratra:
+      'Lobaka lava tanana sy short velory marron, tsy misy col, misy paosy roa eo amin’ny tratra, eo no mipetraka ny fleur de lys sy ny ravinala, misy épaulette. Misy fehikibo.',
+  },
+  {
+    anarana: 'Mpiandraikitra Sampana Mavo',
+    soratra:
+      'Lobaka manga tanora sy zipo manga antitra, tsy misy col, misy paosy roa eo amin’ny tratra, eo no mipetraka ny fleur de lys sy ny ravinala, misy épaulette hipetrahan’ny mariky ny andraikitra. Misy fehikibo.',
+  },
+];
+---
+
+<Base href={href} lohateny="Marika sy fanamiana">
+  <LohaPejy href={href} />
+
+  <!-- MARIKA SAMPATI -->
+  <section class="fizarana atiny marika" aria-labelledby="marika">
+    <div class="marika-sary" data-miseho>
+      <MarikaSampati sizes="(min-width: 760px) 260px, 62vw" aloha />
+    </div>
+    <div data-miseho>
+      <h2 id="marika">Ny mariky ny SAMPATI FJKM</h2>
+      <p class="fehezanteny">
+        Mampiray ny mariky ny Mpanazava sy ny an’ny Tily, miaraka amin’ny boky misokatra.
+      </p>
+      <p class="teny">« {site.teny} » <small>{site.andininy}</small></p>
+    </div>
+  </section>
+
+  <!-- MARIKA EFATRA -->
+  <section class="fizarana atiny" aria-labelledby="efatra" data-miseho>
+    <h2 id="efatra">Ireo marika efatra</h2>
+    <p class="fehezanteny">Izao no filaharany rehefa miaraka ny Mpanazava sy ny Tily.</p>
+    <!-- Sary ofisialy, aseho manontolo: tsy tapahina, tsy ahodina, tsy abontsina -->
+    <div class="efatra-sary">
+      <Image
+        src={mtem}
+        alt="Marika efatra milahatra: AMGE, Mpanazava eto Madagasikara, Tily eto Madagasikara, OMMS"
+        format="png"
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 1024px) 620px, 100vw"
+      />
+    </div>
+    <ol class="efatra-lisitra">
+      {
+        efatra.map((e) => (
+          <li>
+            <strong>{e.anarana}</strong>
+            <span>{e.hevitra}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <Bebe soratra="Ny hevitry ny marika Ravinala">
+      <p>
+        Nampiasaina nanomboka tamin’ny 1955, noforonin’i Martin Razafindrakoto. Marika voaaro eo anivon’ny OMAPI (lah.
+        23908).
+      </p>
+      <ul>
+        {
+          hevitra.map((h) => (
+            <li>
+              <strong>{h.singa}:</strong> {h.hevitra}
+            </li>
+          ))
+        }
+      </ul>
+      <p><strong>Fady rehefa mampiasa azy:</strong> {fady.join('; ')}.</p>
+      <p>Ny fanazavana ny mariky ny Mpanazava dia andrasana.</p>
+      <Loharano fanalahidy={['tilyRavinala', 'fiziantsika']} />
+    </Bebe>
+  </section>
+
+  <!-- FEHITENDA -->
+  <section class="fizarana atiny" aria-labelledby="fehitenda" data-miseho>
+    <h2 id="fehitenda">Ny fehitenda</h2>
+    <p class="fehezanteny"><strong>Manga sy vony</strong> ny lokon’ny Fivondronana faha-25.<Sata /></p>
+    <Kintana />
+    <Bebe>
+      <p>
+        Voalaza fa ny Mpitandrina no nifidy ireo loko ireo, araka ny loko tao anatin’ny trano fiangonana. Ny Tily
+        misalotra fehitenda, ny Mpanazava manao kravaty.
+      </p>
+      <p>
+        Samy manana ny lokom-pehitendany ny fivondronana tsirairay; ireo Tily efa nanao ny Fanekena no misalotra azy.
+        Ny Menafify: tokotany menafify. Ny Toniam-pivondronana: tokotany volomboasary. Samy misy telozoro mitondra ny
+        lokom-pivondronana.
+      </p>
+      <Loharano fanalahidy={['scoutopedia', 'fiziantsika']} />
+    </Bebe>
+  </section>
+
+  <!-- FANAMIANA -->
+  <section class="fizarana atiny" aria-labelledby="fanamiana" data-miseho>
+    <h2 id="fanamiana">Ny fanamiana</h2>
+    <p class="andrasana">
+      Andrasana ny sary tena izy avy amin’ny Fivondronana, ho an’ny Tily sy ho an’ny Mpanazava.
+    </p>
+    <Bebe soratra="Ny fanamiana Tily araka ny torolalana ofisialy">
+      <dl class="fanamiana">
+        {
+          fanamianaTily.map((f) => (
+            <div>
+              <dt>{f.anarana}</dt>
+              <dd>{f.soratra}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p>Ny fanazavana ofisialy momba ny fanamiana Mpanazava dia andrasana.</p>
+      <Loharano fanalahidy={['fiziantsika']} />
+    </Bebe>
+  </section>
+</Base>
+
+<style>
+  .marika {
+    display: grid;
+    gap: 1.6rem clamp(2rem, 6vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 760px) {
+    .marika {
+      grid-template-columns: 260px minmax(0, 1fr);
+    }
+  }
+
+  /* Ny marika dia aseho amin'ny refiny voajanahary: tsy tapahina, tsy ahodina, tsy abontsina. */
+  .marika-sary {
+    width: min(260px, 62vw);
+  }
+
+  .marika h2 + p {
+    margin-top: 0.7rem;
+  }
+
+  .teny {
+    margin-top: 1rem;
+    font-family: var(--sora-tanana);
+    font-size: clamp(1.7rem, 4.6vw, 2.2rem);
+    line-height: 1.05;
+    color: var(--manga);
+  }
+
+  .teny small {
+    font-family: var(--soratra);
+    font-size: 0.8rem;
+    color: var(--ranomainty-2);
+    white-space: nowrap;
+  }
+
+  .efatra-sary {
+    width: min(100%, 620px);
+    margin-top: 1.2rem;
+    background: #fff;
+  }
+
+  .efatra-sary :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .efatra-lisitra {
+    list-style: none;
+    counter-reset: efatra;
+    width: min(100%, 620px);
+    margin: 0.8rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 700px) {
+    .efatra-lisitra {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .efatra-lisitra li {
+    counter-increment: efatra;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .efatra-lisitra strong {
+    display: block;
+  }
+
+  .efatra-lisitra strong::before {
+    content: counter(efatra) '. ';
+    color: var(--manga);
+  }
+
+  .efatra-lisitra span {
+    color: var(--ranomainty-2);
+  }
+
+  .fanamiana {
+    margin: 0;
+  }
+
+  .fanamiana div + div {
+    margin-top: 0.8rem;
+  }
+
+  .fanamiana dt {
+    font-weight: 600;
+    color: var(--ranomainty);
+  }
+
+  .fanamiana dd {
+    margin: 0;
+  }
+</style>

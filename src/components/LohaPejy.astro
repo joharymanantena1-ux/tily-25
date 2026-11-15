@@ -1,0 +1,16 @@
+---
+import { rubrika } from '../data/site';
+
+interface Props {
+  href: string;
+  lede?: string;
+}
+const { href, lede } = Astro.props;
+const r = rubrika.find((x) => x.href === href)!;
+---
+
+<header class="loha-pejy atiny">
+  <p class="anarana-pejy">{r.lohateny}</p>
+  <h1>{r.lehibe}</h1>
+  {lede && <p class="lede">{lede}</p>}
+</header>

@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import LohaPejy from '../components/LohaPejy.astro';
+import Sata from '../components/Sata.astro';
+import Kintana from '../components/Kintana.astro';
+import Bebe from '../components/Bebe.astro';
+import { frise, banga } from '../data/tantara';
+import { loharano } from '../data/loharano';
+
+const href = '/tantara/';
+const lehibe = frise.filter((z) => z.lehibe);
+---
+
+<Base href={href} lohateny="Tantara">
+  <LohaPejy href={href} lede="Ireo daty lehibe tamin’ny dian’ny Fivondronana." />
+
+  <section class="fizarana atiny" aria-label="Tsipi-potoana">
+    <ol class="frise">
+      {
+        lehibe.map((z) => (
+          <li data-miseho>
+            <p class="daty">{z.daty}</p>
+            <div>
+              <h2>{z.lohateny}</h2>
+              <p>
+                {z.fohy}
+                {z.hamarinina && <Sata />}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <Kintana />
+
+    <Bebe soratra="Ny tantara feno">
+      <ol class="feno">
+        {
+          frise.map((z) => (
+            <li>
+              <strong>{z.daty}</strong> — {z.lohateny}. {z.fohy} {z.antsipiriany}
+              {z.hamarinina && <Sata />}{' '}
+              <span class="loharano-kely">
+                (
+                {z.loharano.map((k, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    <a href={loharano[k].url} rel="noopener">
+                      loharano{z.loharano.length > 1 ? ` ${i + 1}` : ''}
+                    </a>
+                  </>
+                ))}
+                )
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+      <p>Mbola andrasana avy amin’ny Fivondronana: {banga.join(', ')}.</p>
+    </Bebe>
+  </section>
+</Base>
+
+<style>
+  .frise {
+    list-style: none;
+    margin: 0 0 1.2rem;
+    padding: 0;
+    border-top: 1px solid var(--tsipika);
+  }
+
+  .frise li {
+    display: grid;
+    gap: 0.2rem 2rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--tsipika);
+  }
+
+  @media (min-width: 640px) {
+    .frise li {
+      grid-template-columns: 7rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .daty {
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--manga);
+  }
+
+  .frise h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .frise h2 + p {
+    margin-top: 0.2rem;
+    color: var(--ranomainty-2);
+    max-width: 56ch;
+  }
+
+  .feno {
+    list-style: none;
+    padding: 0 !important;
+  }
+</style>
